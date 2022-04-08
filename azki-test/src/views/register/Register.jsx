@@ -82,7 +82,6 @@ const Register = () => {
       }));
     }
   };
-  console.log(form);
 
   return (
     <form onSubmit={handleRegister}>

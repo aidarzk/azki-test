@@ -6,7 +6,7 @@ import { Button, Grid, TextField, Typography } from "@mui/material";
 import { validationRules } from "src/enums";
 import { validation } from "src/functions";
 
-import { CustomTextField, CustomAutocomplete } from "src/components";
+import { CustomAutocomplete } from "src/components";
 
 import Autocomplete from "@mui/material/Autocomplete";
 
@@ -80,17 +80,6 @@ const SelectCar = (props) => {
     }));
   };
 
-  const handleRegister = (e) => {
-    e.preventDefault();
-    const validationErrors = validation(form, schema);
-    if (Object.keys(validationErrors)?.length > 0) {
-      setForm((prevState) => ({
-        ...prevState,
-        errors: validationErrors,
-      }));
-    }
-  };
-
   const getCarType = async () => {
     try {
       const response = await axios({
@@ -103,7 +92,6 @@ const SelectCar = (props) => {
         )?.brands;
         setCarTypeList(brands);
       }
-      console.log(response);
     } catch (error) {
       console.error(error);
     }
@@ -143,7 +131,7 @@ const SelectCar = (props) => {
   const handleBack = () => {
     setActiveStep((prevState) => prevState - 1);
   };
-  console.log("carTypeList", form);
+
   return (
     <Grid container spacing={3}>
       <Grid

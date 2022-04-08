@@ -6,7 +6,9 @@ import { Button, Grid, TextField, Typography } from "@mui/material";
 import { validationRules } from "src/enums";
 import { validation } from "src/functions";
 
-import { CustomTextField } from "src/components";
+import { CustomAutocomplete } from "src/components";
+
+import axios from "axios";
 
 const schema = {
   firstName: {
@@ -44,25 +46,27 @@ const schema = {
 const SelectCar = (props) => {
   const { setActiveStep } = props;
 
+  const [thirdPersonPercentageList, setThirdPersonPercentageList] = useState(
+    []
+  );
+
+  const [incidentPercentageList, setIncidentPercentageList] = useState([]);
+
   const [form, setForm] = useState({
     values: {
-      firstName: "",
-      lastName: "",
+      thirdPersonPercentage: "",
+      incidentPercentage: "",
     },
     errors: {},
   });
 
-  const { firstName, password, lastName, mobile } = form?.values;
+  const { thirdPersonPercentage, incidentPercentage } = form?.values;
   const { errors } = form;
 
-  const onChange = (e) => {
-    let name = e.target.name;
-    let value = e.target.value;
-
+  const onChangeAutoComplete = (name) => (event, value) => {
     if (errors[name]) {
       delete errors[name];
     }
-
     setForm((prevState) => ({
       ...prevState,
       values: {
@@ -72,16 +76,40 @@ const SelectCar = (props) => {
     }));
   };
 
-  const handleRegister = (e) => {
-    e.preventDefault();
-    const validationErrors = validation(form, schema);
-    if (Object.keys(validationErrors)?.length > 0) {
-      setForm((prevState) => ({
-        ...prevState,
-        errors: validationErrors,
-      }));
+  const getThirdDiscount = async () => {
+    try {
+      const response = await axios({
+        method: "get",
+        url: "https://bimito.com/api/product/third/third-discounts",
+      });
+      console.log(response);
+      if (response?.status === 200) {
+        setThirdPersonPercentageList(response?.data);
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
+
+  const getDriverDiscount = async () => {
+    try {
+      const response = await axios({
+        method: "get",
+        url: "https://bimito.com/api/product/third/driver-discounts",
+      });
+      console.log(response);
+      if (response?.status === 200) {
+        setIncidentPercentageList(response?.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getThirdDiscount();
+    getDriverDiscount();
+  }, []);
 
   const handleNext = () => {
     setActiveStep("selectLastInsuranceCo");
@@ -106,21 +134,23 @@ const SelectCar = (props) => {
         </Typography>
       </Grid>
       <Grid item xl={12}>
-        <CustomTextField
-          errors={errors?.firstName}
-          onChange={onChange}
+        <CustomAutocomplete
+          options={thirdPersonPercentageList}
           label={farsi.thirdPersonPercentage}
-          name="firstName"
-          value={firstName}
+          onChange={onChangeAutoComplete}
+          name="thirdPersonPercentage"
+          errors={errors?.thirdPersonPercentage}
+          value={thirdPersonPercentage}
         />
       </Grid>
       <Grid item xl={12}>
-        <CustomTextField
-          errors={errors?.lastName}
-          onChange={onChange}
+        <CustomAutocomplete
+          options={incidentPercentageList}
           label={farsi.incidentPercentage}
-          name="lastName"
-          value={lastName}
+          onChange={onChangeAutoComplete}
+          name="incidentPercentage"
+          errors={errors?.incidentPercentage}
+          value={incidentPercentage}
         />
       </Grid>
 

@@ -25,7 +25,7 @@ const Insurance = () => {
         return <SelectCar setActiveStep={setActiveStep} />;
     }
   };
-  console.log("activeStep", activeStep);
+
   const handleNext = () => {
     setActiveStep((prevState) => prevState + 1);
   };

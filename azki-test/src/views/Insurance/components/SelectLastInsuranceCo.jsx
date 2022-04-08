@@ -6,7 +6,9 @@ import { Button, Grid, TextField, Typography } from "@mui/material";
 import { validationRules } from "src/enums";
 import { validation } from "src/functions";
 
-import { CustomTextField } from "src/components";
+import { CustomAutocomplete } from "src/components";
+
+import axios from "axios";
 
 const schema = {
   firstName: {
@@ -44,25 +46,41 @@ const schema = {
 const SelectCar = (props) => {
   const { setActiveStep } = props;
 
+  const [insuranceCompanyList, setinsuranceCompanyList] = useState([]);
+
   const [form, setForm] = useState({
     values: {
-      firstName: "",
-      lastName: "",
+      insuranceCompany: "",
     },
     errors: {},
   });
 
-  const { firstName, password, lastName, mobile } = form?.values;
+  const { insuranceCompany } = form?.values;
   const { errors } = form;
 
-  const onChange = (e) => {
-    let name = e.target.name;
-    let value = e.target.value;
+  const getInsureCompanies = async () => {
+    try {
+      const response = await axios({
+        method: "get",
+        url: "https://bimito.com/api/product/third/companies",
+      });
+      console.log(response);
+      if (response?.status === 200) {
+        setinsuranceCompanyList(response?.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
+  useEffect(() => {
+    getInsureCompanies();
+  }, []);
+
+  const onChangeAutoComplete = (name) => (event, value) => {
     if (errors[name]) {
       delete errors[name];
     }
-
     setForm((prevState) => ({
       ...prevState,
       values: {
@@ -70,17 +88,6 @@ const SelectCar = (props) => {
         [name]: value,
       },
     }));
-  };
-
-  const handleRegister = (e) => {
-    e.preventDefault();
-    const validationErrors = validation(form, schema);
-    if (Object.keys(validationErrors)?.length > 0) {
-      setForm((prevState) => ({
-        ...prevState,
-        errors: validationErrors,
-      }));
-    }
   };
 
   const handleNext = () => {
@@ -106,12 +113,13 @@ const SelectCar = (props) => {
         </Typography>
       </Grid>
       <Grid item xl={12}>
-        <CustomTextField
-          errors={errors?.firstName}
-          onChange={onChange}
+        <CustomAutocomplete
+          options={insuranceCompanyList}
           label={farsi.lastInsuranceCompany}
-          name="firstName"
-          value={firstName}
+          onChange={onChangeAutoComplete}
+          name="insuranceCompany"
+          errors={errors?.insuranceCompany}
+          value={insuranceCompany}
         />
       </Grid>
 
@@ -145,6 +153,7 @@ const SelectCar = (props) => {
           }}
           variant="outlined"
           onClick={handleNext}
+          disabled={!insuranceCompany}
         >
           {farsi.next}
           <img
