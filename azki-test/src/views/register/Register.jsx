@@ -1,57 +1,59 @@
-import React, { useState, useEffect, } from "react";
-
-
+import React, { useState, useEffect } from "react";
 
 import farsi from "src/dictionary/farsi";
 import { Button, Grid, TextField, Typography } from "@mui/material";
 
-// import RegisterJss from './RegisterJss'
+import { validationRules } from "src/enums";
+import { validation } from "src/functions";
 
-// const schema = {
-//   telephone: {
-//     rules: {
-//       [validationRules.isRequired]: true,
-//       [validationRules.numberFormat]: true,
-//       [validationRules.exactLength]: 11,
-//       [validationRules.telephone]: true,
-//     },
-//     name: farsi.telephone,
-//   },
-//   otp: {
-//     rules: {
-//       [validationRules.isRequired]: true,
-//       [validationRules.numberFormat]: true,
-//       [validationRules.exactLength]: 6,
-//     },
-//     name: farsi.oneTimePassword,
-//   },
-//   password: {
-//     rules: {
-//       [validationRules.isRequired]: true,
-//       [validationRules.minLength]: 6,
-//     },
-//     name: farsi.password,
-//   },
-// };
+import { CustomTextField } from "src/components";
 
+const schema = {
+  firstName: {
+    rules: {
+      [validationRules.isRequired]: true,
+      [validationRules.onlyFarsi]: true,
+    },
+    name: farsi.firstName,
+  },
+  lastName: {
+    rules: {
+      [validationRules.isRequired]: true,
+      [validationRules.onlyFarsi]: true,
+    },
+    name: farsi.lastName,
+  },
+  mobile: {
+    rules: {
+      [validationRules.isRequired]: true,
+      [validationRules.mobileFormat]: true,
+    },
+    name: farsi.mobile,
+  },
+  password: {
+    rules: {
+      [validationRules.isRequired]: true,
+      [validationRules.maxLength]: 10,
+      [validationRules.minLength]: 4,
+      [validationRules.passwordFormat]: true,
+    },
+    name: farsi.password,
+  },
+};
 
 const Register = () => {
-  // const classes = RegisterJss();
-
   const [form, setForm] = useState({
     values: {
-      firstName: '',
-      lastName: '',
+      firstName: "",
+      lastName: "",
       mobile: "",
       password: "",
     },
     errors: {},
   });
 
-  const { telephone, password, otp, userExists } = form?.values;
+  const { firstName, password, lastName, mobile } = form?.values;
   const { errors } = form;
-
-
 
   const onChange = (e) => {
     let name = e.target.name;
@@ -60,12 +62,6 @@ const Register = () => {
     if (errors[name]) {
       delete errors[name];
     }
-    // if (schema[name]?.rules?.numberFormat) {
-    //   value = value?.replace(
-    //     /[a-zA-zآ-ی!@#$%^&*()-+=}{\]|\:;"'<,>.?\/\\~؟×÷`_-]/,
-    //     ""
-    //   );
-    // }
 
     setForm((prevState) => ({
       ...prevState,
@@ -76,41 +72,86 @@ const Register = () => {
     }));
   };
 
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const validationErrors = validation(form, schema);
+    if (Object.keys(validationErrors)?.length > 0) {
+      setForm((prevState) => ({
+        ...prevState,
+        errors: validationErrors,
+      }));
+    }
+  };
+  console.log(form);
 
   return (
-    <Grid container>
-      <Grid item xl={12}>
-        <Typography>
-          {farsi.register}
-        </Typography>
+    <form onSubmit={handleRegister}>
+      <Grid container spacing={3}>
+        <Grid item xl={12}>
+          <Typography
+            sx={{
+              marginBottom: 3,
+              fontWeight: 500,
+              textAlign: "left",
+            }}
+            variant="h4"
+          >
+            {farsi.register}
+          </Typography>
+        </Grid>
+        <Grid item xl={6}>
+          <CustomTextField
+            errors={errors?.firstName}
+            onChange={onChange}
+            label={farsi.firstName}
+            name="firstName"
+            value={firstName}
+          />
+        </Grid>
+        <Grid item xl={6}>
+          <CustomTextField
+            errors={errors?.lastName}
+            onChange={onChange}
+            label={farsi.lastName}
+            name="lastName"
+            value={lastName}
+          />
+        </Grid>
+        <Grid item xl={12}>
+          <CustomTextField
+            errors={errors?.mobile}
+            onChange={onChange}
+            label={farsi.mobile}
+            name="mobile"
+            value={mobile}
+          />
+        </Grid>
+        <Grid item xl={12}>
+          <CustomTextField
+            errors={errors?.password}
+            onChange={onChange}
+            label={farsi.password}
+            name="password"
+            value={password}
+          />
+        </Grid>
+        <Grid display={"flex"} item xl={12}>
+          <Button
+            sx={{
+              color: "white",
+              borderRadius: 15,
+              px: 6,
+              py: 1.5,
+              ml: "auto",
+            }}
+            variant="contained"
+            type="submit"
+          >
+            {farsi.register}
+          </Button>
+        </Grid>
       </Grid>
-      <Grid item xl={6}>
-        <TextField fullWidth id="outlined-basic" label={
-          farsi.firstName
-        } variant="outlined" />
-      </Grid>
-      <Grid item xl={6}>
-        <TextField id="outlined-basic" label={
-          farsi.lastName
-        } variant="outlined" />
-      </Grid>
-      <Grid item xl={12}>
-        <TextField id="outlined-basic" label={
-          farsi.mobile
-        } variant="outlined" />
-      </Grid>
-      <Grid item xl={12}>
-        <TextField id="outlined-basic" label={
-          farsi.password
-        } variant="outlined" />
-      </Grid>
-      <Grid item xl={12}>
-        <Button variant="contained">
-          {farsi.register}
-        </Button>
-      </Grid>
-    </Grid>
-
+    </form>
   );
 };
 

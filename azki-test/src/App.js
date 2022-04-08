@@ -16,6 +16,11 @@ import { MainLayout } from "src/layouts";
 
 const theme = createTheme({
   direction: "rtl", // Both here and <body dir="rtl">
+  palette: {
+    primary: {
+      main: "#25b79b",
+    },
+  },
 });
 
 // Create rtl cache

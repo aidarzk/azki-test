@@ -15,7 +15,9 @@ const MainLayout = (props) => {
                 <Grid item xl={12}>
                     <Header />
                 </Grid>
-                <Grid item xl={6}>
+                <Grid sx={{
+                    paddingLeft: 10
+                }} item xl={6}>
                     {props.children}
                 </Grid>
                 <Grid item xl={6}>

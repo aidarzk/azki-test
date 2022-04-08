@@ -27,7 +27,7 @@ const Header = (props) => {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 500 }}>
                         {farsi.mainTitle}
                     </Typography>
-                    <Button color="inherit">{farsi.register}</Button>
+                    <Button color="primary">{farsi.register}</Button>
                 </Toolbar>
             </AppBar>
         </Box>
