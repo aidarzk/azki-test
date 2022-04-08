@@ -1,7 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
 
-import Register from "./views/register/Register";
+import { Register } from "src/views";
 
 import { Routes, Route, Link } from "react-router-dom";
 
