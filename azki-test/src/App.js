@@ -1,7 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
 
-import { Register } from "src/views";
+import { Register, Insurance } from "src/views";
 
 import { Routes, Route, Link } from "react-router-dom";
 
@@ -37,7 +37,7 @@ function App() {
           <MainLayout>
             <Routes>
               <Route path="/" element={<Register />} />
-              {/* <Route path="about" element={<About />} /> */}
+              <Route path="insurance" element={<Insurance />} />
             </Routes>
           </MainLayout>
         </div>
