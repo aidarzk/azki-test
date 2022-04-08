@@ -1,0 +1,40 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: "Iranian Sans";
+}
+
+* {
+  font-family: "Iranian Sans" !important;
+}
+
+@font-face {
+  font-family: Iranian Sans;
+  font-style: normal;
+  font-weight: 400;
+  color: black;
+  src: url("../public/fonts/Iranian-Sans/webFonts/fonts/ttf/IRANSansWeb\(FaNum\)_Black.ttf");
+}
+
+@font-face {
+  font-family: Iranian Sans;
+  font-style: normal;
+  font-weight: 400;
+  color: black;
+  src: url("../public/fonts/Iranian-Sans/IRANSans\(FaNum\).ttf");
+}
+
+@font-face {
+  font-family: Iranian Sans;
+  font-style: bold;
+  font-weight: 500;
+  color: black;
+  src: url("../public/fonts/Iranian-Sans/IRANSans\(FaNum\)_Bold.ttf");
+}
