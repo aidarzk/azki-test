@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import farsi from "src/dictionary/farsi";
 import { Button, Grid, TextField, Typography } from "@mui/material";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 import { validationRules } from "src/enums";
 import { validation } from "src/functions";
@@ -12,73 +13,12 @@ import Autocomplete from "@mui/material/Autocomplete";
 
 import axios from "axios";
 
-const schema = {
-  firstName: {
-    rules: {
-      [validationRules.isRequired]: true,
-      [validationRules.onlyFarsi]: true,
-    },
-    name: farsi.firstName,
-  },
-  lastName: {
-    rules: {
-      [validationRules.isRequired]: true,
-      [validationRules.onlyFarsi]: true,
-    },
-    name: farsi.lastName,
-  },
-  mobile: {
-    rules: {
-      [validationRules.isRequired]: true,
-      [validationRules.mobileFormat]: true,
-    },
-    name: farsi.mobile,
-  },
-  password: {
-    rules: {
-      [validationRules.isRequired]: true,
-      [validationRules.maxLength]: 10,
-      [validationRules.minLength]: 4,
-      [validationRules.passwordFormat]: true,
-    },
-    name: farsi.password,
-  },
-};
-
 const SelectCar = (props) => {
-  const { setActiveStep } = props;
+  const { setActiveStep, carType, carModel, onChangeAutoComplete } = props;
 
   const [carTypeList, setCarTypeList] = useState([]);
 
   const [carModelList, setCarModelList] = useState([]);
-
-  const [form, setForm] = useState({
-    values: {
-      carType: "",
-      carModel: "",
-    },
-    errors: {},
-  });
-
-  const { carType, carModel } = form?.values;
-  const { errors } = form;
-
-  const onChange = (e) => {
-    let name = e.target.name;
-    let value = e.target.value;
-
-    if (errors[name]) {
-      delete errors[name];
-    }
-
-    setForm((prevState) => ({
-      ...prevState,
-      values: {
-        ...prevState.values,
-        [name]: value,
-      },
-    }));
-  };
 
   const getCarType = async () => {
     try {
@@ -101,35 +41,18 @@ const SelectCar = (props) => {
     getCarType();
   }, []);
 
-  const onChangeAutoComplete = (name) => (event, value) => {
-    if (errors[name]) {
-      delete errors[name];
+  useEffect(() => {
+    if (carType) {
+      setCarModelList(carType?.models);
     }
-    setForm((prevState) => ({
-      ...prevState,
-      values: {
-        ...prevState.values,
-        [name]: value,
-      },
-    }));
-    if (value?.models?.length > 0) {
-      setCarModelList(value?.models);
-      setForm((prevState) => ({
-        ...prevState,
-        values: {
-          ...prevState.values,
-          carModel: "",
-        },
-      }));
-    }
-  };
+  }, [carType]);
 
   const handleNext = () => {
     setActiveStep("selectLastInsuranceCo");
   };
 
   const handleBack = () => {
-    setActiveStep((prevState) => prevState - 1);
+    setActiveStep();
   };
 
   return (
@@ -152,7 +75,6 @@ const SelectCar = (props) => {
           label={farsi.carType}
           onChange={onChangeAutoComplete}
           name="carType"
-          errors={errors?.carType}
           value={carType}
         />
       </Grid>
@@ -162,7 +84,6 @@ const SelectCar = (props) => {
           label={farsi.carModel}
           onChange={onChangeAutoComplete}
           name="carModel"
-          errors={errors?.carModel}
           value={carModel}
         />
       </Grid>
@@ -178,11 +99,9 @@ const SelectCar = (props) => {
           variant="outlined"
           onClick={handleBack}
         >
-          <img
-            src="icons/arrow.svg"
-            width={12}
-            style={{
-              marginLeft: 12,
+          <ArrowBackIosIcon
+            fontSize="14"
+            sx={{
               transform: "rotate(180deg)",
             }}
           />
@@ -200,13 +119,7 @@ const SelectCar = (props) => {
           disabled={!carModel || !carType}
         >
           {farsi.next}
-          <img
-            src="icons/arrow.svg"
-            width={12}
-            style={{
-              marginRight: 12,
-            }}
-          />
+          <ArrowBackIosIcon fontSize="14" />
         </Button>
       </Grid>
     </Grid>

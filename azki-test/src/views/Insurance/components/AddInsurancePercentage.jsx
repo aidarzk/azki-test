@@ -10,71 +10,20 @@ import { CustomAutocomplete } from "src/components";
 
 import axios from "axios";
 
-const schema = {
-  firstName: {
-    rules: {
-      [validationRules.isRequired]: true,
-      [validationRules.onlyFarsi]: true,
-    },
-    name: farsi.firstName,
-  },
-  lastName: {
-    rules: {
-      [validationRules.isRequired]: true,
-      [validationRules.onlyFarsi]: true,
-    },
-    name: farsi.lastName,
-  },
-  mobile: {
-    rules: {
-      [validationRules.isRequired]: true,
-      [validationRules.mobileFormat]: true,
-    },
-    name: farsi.mobile,
-  },
-  password: {
-    rules: {
-      [validationRules.isRequired]: true,
-      [validationRules.maxLength]: 10,
-      [validationRules.minLength]: 4,
-      [validationRules.passwordFormat]: true,
-    },
-    name: farsi.password,
-  },
-};
-
 const SelectCar = (props) => {
-  const { setActiveStep } = props;
+  const {
+    setActiveStep,
+    thirdPersonPercentage,
+    incidentPercentage,
+    onChangeAutoComplete,
+    openModal,
+  } = props;
 
   const [thirdPersonPercentageList, setThirdPersonPercentageList] = useState(
     []
   );
 
   const [incidentPercentageList, setIncidentPercentageList] = useState([]);
-
-  const [form, setForm] = useState({
-    values: {
-      thirdPersonPercentage: "",
-      incidentPercentage: "",
-    },
-    errors: {},
-  });
-
-  const { thirdPersonPercentage, incidentPercentage } = form?.values;
-  const { errors } = form;
-
-  const onChangeAutoComplete = (name) => (event, value) => {
-    if (errors[name]) {
-      delete errors[name];
-    }
-    setForm((prevState) => ({
-      ...prevState,
-      values: {
-        ...prevState.values,
-        [name]: value,
-      },
-    }));
-  };
 
   const getThirdDiscount = async () => {
     try {
@@ -111,14 +60,6 @@ const SelectCar = (props) => {
     getDriverDiscount();
   }, []);
 
-  const handleNext = () => {
-    setActiveStep("selectLastInsuranceCo");
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevState) => prevState - 1);
-  };
-
   return (
     <Grid container spacing={3}>
       <Grid
@@ -139,7 +80,6 @@ const SelectCar = (props) => {
           label={farsi.thirdPersonPercentage}
           onChange={onChangeAutoComplete}
           name="thirdPersonPercentage"
-          errors={errors?.thirdPersonPercentage}
           value={thirdPersonPercentage}
         />
       </Grid>
@@ -149,7 +89,6 @@ const SelectCar = (props) => {
           label={farsi.incidentPercentage}
           onChange={onChangeAutoComplete}
           name="incidentPercentage"
-          errors={errors?.incidentPercentage}
           value={incidentPercentage}
         />
       </Grid>
@@ -164,7 +103,7 @@ const SelectCar = (props) => {
             color: "white",
           }}
           variant="contained"
-          onClick={handleBack}
+          onClick={openModal}
         >
           {farsi.getPrice}
         </Button>

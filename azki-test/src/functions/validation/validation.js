@@ -45,6 +45,11 @@ const validation = (form, schema) => {
           emailRegError && error.push(emailRegError);
           break;
 
+        case validationRules.onlyFarsi:
+          const farsi = onlyFarsi(value);
+          farsi && error.push(farsi);
+          break;
+
         default:
           break;
       }

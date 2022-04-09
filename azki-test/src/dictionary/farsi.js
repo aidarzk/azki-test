@@ -20,6 +20,7 @@ const farsi = {
   carType: "نوع خودرو",
   carModel: "مدل خودرو",
   doesntExist: "یافت نشد",
+  infoSummary: "خلاصه اطلاعات وارد شده",
 };
 
 export default farsi;

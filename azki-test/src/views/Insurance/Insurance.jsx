@@ -8,21 +8,88 @@ import {
   SelectCar,
   SelectLastInsuranceCo,
   AddInsurancePercentage,
+  InformationModal,
 } from "./components";
 
 const Insurance = () => {
+  const [infoModal, setInfoModal] = useState(false);
+
   const [activeStep, setActiveStep] = useState("selectCar");
+
+  const [form, setForm] = useState({
+    carType: "",
+    carModel: "",
+    insuranceCompany: "",
+    thirdPersonPercentage: "",
+    incidentPercentage: "",
+  });
+
+  const {
+    carType,
+    carModel,
+    insuranceCompany,
+    thirdPersonPercentage,
+    incidentPercentage,
+  } = form;
+
+  const closeModal = () => setInfoModal(false);
+
+  const openModal = () => setInfoModal(true);
+
+  const onChangeAutoComplete = (name) => (event, value) => {
+    setForm((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+
+    if (name === "carType") {
+      setForm((prevState) => ({
+        ...prevState,
+        carModel: "",
+      }));
+    }
+  };
+
+  console.log("fff", form);
 
   const getStepContent = (step) => {
     switch (step) {
       case "selectCar":
-        return <SelectCar setActiveStep={setActiveStep} />;
+        return (
+          <SelectCar
+            carType={carType}
+            carModel={carModel}
+            setActiveStep={setActiveStep}
+            onChangeAutoComplete={onChangeAutoComplete}
+          />
+        );
       case "selectLastInsuranceCo":
-        return <SelectLastInsuranceCo setActiveStep={setActiveStep} />;
+        return (
+          <SelectLastInsuranceCo
+            setActiveStep={setActiveStep}
+            onChangeAutoComplete={onChangeAutoComplete}
+            insuranceCompany={insuranceCompany}
+          />
+        );
       case "addInsurancePercentage":
-        return <AddInsurancePercentage setActiveStep={setActiveStep} />;
+        return (
+          <AddInsurancePercentage
+            setActiveStep={setActiveStep}
+            onChangeAutoComplete={onChangeAutoComplete}
+            openModal={openModal}
+            thirdPersonPercentage={thirdPersonPercentage}
+            incidentPercentage={incidentPercentage}
+          />
+        );
       default:
-        return <SelectCar setActiveStep={setActiveStep} />;
+        return (
+          <SelectCar
+            carType={carType}
+            carModel={carModel}
+            setActiveStep={setActiveStep}
+            onChangeAutoComplete={onChangeAutoComplete}
+          />
+        );
     }
   };
 
@@ -51,6 +118,7 @@ const Insurance = () => {
         </Grid>
         {getStepContent(activeStep)}
       </Grid>
+      <InformationModal open={infoModal} onClose={closeModal} form={form} />
     </Fragment>
   );
 };

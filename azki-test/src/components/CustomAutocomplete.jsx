@@ -13,6 +13,7 @@ const CustomAutocomplete = (props) => {
       fullWidth
       disablePortal
       id="combo-box-demo"
+      disableClearable
       options={options}
       name={name}
       value={value ? value : null}

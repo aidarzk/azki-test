@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import farsi from "src/dictionary/farsi";
 import { Button, Grid, TextField, Typography } from "@mui/material";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 import { validationRules } from "src/enums";
 import { validation } from "src/functions";
@@ -10,53 +11,10 @@ import { CustomAutocomplete } from "src/components";
 
 import axios from "axios";
 
-const schema = {
-  firstName: {
-    rules: {
-      [validationRules.isRequired]: true,
-      [validationRules.onlyFarsi]: true,
-    },
-    name: farsi.firstName,
-  },
-  lastName: {
-    rules: {
-      [validationRules.isRequired]: true,
-      [validationRules.onlyFarsi]: true,
-    },
-    name: farsi.lastName,
-  },
-  mobile: {
-    rules: {
-      [validationRules.isRequired]: true,
-      [validationRules.mobileFormat]: true,
-    },
-    name: farsi.mobile,
-  },
-  password: {
-    rules: {
-      [validationRules.isRequired]: true,
-      [validationRules.maxLength]: 10,
-      [validationRules.minLength]: 4,
-      [validationRules.passwordFormat]: true,
-    },
-    name: farsi.password,
-  },
-};
-
 const SelectCar = (props) => {
-  const { setActiveStep } = props;
+  const { setActiveStep, insuranceCompany, onChangeAutoComplete } = props;
 
   const [insuranceCompanyList, setinsuranceCompanyList] = useState([]);
-
-  const [form, setForm] = useState({
-    values: {
-      insuranceCompany: "",
-    },
-    errors: {},
-  });
-
-  const { insuranceCompany } = form?.values;
-  const { errors } = form;
 
   const getInsureCompanies = async () => {
     try {
@@ -77,25 +35,12 @@ const SelectCar = (props) => {
     getInsureCompanies();
   }, []);
 
-  const onChangeAutoComplete = (name) => (event, value) => {
-    if (errors[name]) {
-      delete errors[name];
-    }
-    setForm((prevState) => ({
-      ...prevState,
-      values: {
-        ...prevState.values,
-        [name]: value,
-      },
-    }));
-  };
-
   const handleNext = () => {
     setActiveStep("addInsurancePercentage");
   };
 
   const handleBack = () => {
-    setActiveStep((prevState) => prevState - 1);
+    setActiveStep("selectCar");
   };
 
   return (
@@ -118,7 +63,6 @@ const SelectCar = (props) => {
           label={farsi.lastInsuranceCompany}
           onChange={onChangeAutoComplete}
           name="insuranceCompany"
-          errors={errors?.insuranceCompany}
           value={insuranceCompany}
         />
       </Grid>
@@ -134,11 +78,9 @@ const SelectCar = (props) => {
           variant="outlined"
           onClick={handleBack}
         >
-          <img
-            src="icons/arrow.svg"
-            width={12}
-            style={{
-              marginLeft: 12,
+          <ArrowBackIosIcon
+            fontSize="14"
+            sx={{
               transform: "rotate(180deg)",
             }}
           />
@@ -156,13 +98,7 @@ const SelectCar = (props) => {
           disabled={!insuranceCompany}
         >
           {farsi.next}
-          <img
-            src="icons/arrow.svg"
-            width={12}
-            style={{
-              marginRight: 12,
-            }}
-          />
+          <ArrowBackIosIcon fontSize="14" />
         </Button>
       </Grid>
     </Grid>
