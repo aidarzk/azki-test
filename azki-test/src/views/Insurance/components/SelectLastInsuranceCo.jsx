@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 import farsi from "src/dictionary/farsi";
-import { Button, Grid, TextField, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-
-import { validationRules } from "src/enums";
-import { validation } from "src/functions";
 
 import { CustomAutocomplete } from "src/components";
 
@@ -52,12 +49,13 @@ const SelectCar = (props) => {
         }}
         item
         xl={12}
+        xs={12}
       >
         <Typography variant="p" color="gray">
           {farsi.selectYourLastInsuranceCompany}
         </Typography>
       </Grid>
-      <Grid item xl={12}>
+      <Grid item xl={12} xs={12}>
         <CustomAutocomplete
           options={insuranceCompanyList}
           label={farsi.lastInsuranceCompany}
@@ -67,7 +65,14 @@ const SelectCar = (props) => {
         />
       </Grid>
 
-      <Grid display={"flex"} item xl={12}>
+      <Grid
+        display="flex"
+        justifyContent="space-between"
+        width="100%"
+        item
+        xl={12}
+        xs={12}
+      >
         <Button
           sx={{
             borderRadius: 15,

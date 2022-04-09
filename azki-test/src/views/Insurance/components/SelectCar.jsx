@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from "react";
 
 import farsi from "src/dictionary/farsi";
-import { Button, Grid, TextField, Typography } from "@mui/material";
+import { Button, Grid, Typography, Link } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
-import { validationRules } from "src/enums";
-import { validation } from "src/functions";
-
 import { CustomAutocomplete } from "src/components";
-
-import Autocomplete from "@mui/material/Autocomplete";
 
 import axios from "axios";
 
@@ -51,25 +46,23 @@ const SelectCar = (props) => {
     setActiveStep("selectLastInsuranceCo");
   };
 
-  const handleBack = () => {
-    setActiveStep();
-  };
-
   return (
     <Grid container spacing={3}>
       <Grid
         sx={{
           marginBottom: 2,
           textAlign: "left",
+          pr: "auto",
         }}
         item
         xl={12}
+        xs={12}
       >
         <Typography variant="p" color="gray">
           {farsi.selectTypeAndModelOfYourCar}
         </Typography>
       </Grid>
-      <Grid item xl={6}>
+      <Grid item xl={6} md={6} sm={12} xs={12}>
         <CustomAutocomplete
           options={carTypeList}
           label={farsi.carType}
@@ -78,7 +71,7 @@ const SelectCar = (props) => {
           value={carType}
         />
       </Grid>
-      <Grid item xl={6}>
+      <Grid item xl={6} md={6} sm={12} xs={12}>
         <CustomAutocomplete
           options={carModelList}
           label={farsi.carModel}
@@ -88,7 +81,14 @@ const SelectCar = (props) => {
         />
       </Grid>
 
-      <Grid display={"flex"} item xl={12}>
+      <Grid
+        display="flex"
+        justifyContent="space-between"
+        width="100%"
+        item
+        xl={12}
+        xs={12}
+      >
         <Button
           sx={{
             borderRadius: 15,
@@ -97,15 +97,16 @@ const SelectCar = (props) => {
             mr: "auto",
           }}
           variant="outlined"
-          onClick={handleBack}
         >
-          <ArrowBackIosIcon
-            fontSize="14"
-            sx={{
-              transform: "rotate(180deg)",
-            }}
-          />
-          {farsi.back}
+          <Link display="flex" alignItems="center" href="/" underline="none">
+            <ArrowBackIosIcon
+              fontSize="14"
+              sx={{
+                transform: "rotate(180deg)",
+              }}
+            />
+            {farsi.back}
+          </Link>
         </Button>
         <Button
           sx={{

@@ -50,8 +50,6 @@ const Insurance = () => {
     }
   };
 
-  console.log("fff", form);
-
   const getStepContent = (step) => {
     switch (step) {
       case "selectCar":

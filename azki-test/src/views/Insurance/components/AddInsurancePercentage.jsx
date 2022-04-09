@@ -69,12 +69,13 @@ const SelectCar = (props) => {
         }}
         item
         xl={12}
+        xs={12}
       >
         <Typography variant="p" color="gray">
           {farsi.selectThirdpersonAndIncidentInsurancePercentage}
         </Typography>
       </Grid>
-      <Grid item xl={12}>
+      <Grid item xl={12} xs={12}>
         <CustomAutocomplete
           options={thirdPersonPercentageList}
           label={farsi.thirdPersonPercentage}
@@ -83,7 +84,7 @@ const SelectCar = (props) => {
           value={thirdPersonPercentage}
         />
       </Grid>
-      <Grid item xl={12}>
+      <Grid item xl={12} xs={12} s>
         <CustomAutocomplete
           options={incidentPercentageList}
           label={farsi.incidentPercentage}

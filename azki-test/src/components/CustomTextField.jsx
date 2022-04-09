@@ -3,7 +3,7 @@ import React from "react";
 import TextField from "@mui/material/TextField";
 
 const CustomTextField = (props) => {
-  const { label, name, onChange, errors, className, value } = props;
+  const { label, name, onChange, errors, className, value, type } = props;
 
   return (
     <TextField
@@ -16,6 +16,7 @@ const CustomTextField = (props) => {
       onChange={onChange}
       fullWidth
       error={errors}
+      type={type}
       helperText={errors?.map((err, index) => (
         <p
           style={{ margin: "4px 0", textAlign: "right", fontSize: 12 }}
