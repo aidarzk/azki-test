@@ -1,9 +1,8 @@
-import logo from "./logo.svg";
 import "./App.css";
 
 import { Register, Insurance } from "src/views";
 
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 

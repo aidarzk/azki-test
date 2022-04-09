@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import farsi from "src/dictionary/farsi";
-import { Button, Grid, TextField, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 
 import { validationRules } from "src/enums";
 import { validation } from "src/functions";
@@ -12,7 +12,7 @@ import { CustomTextField } from "src/components";
 import { useDispatch } from "react-redux";
 import { register } from "src/actions";
 
-import axios, { AxiosRequestConfig } from "axios";
+import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
 const axiosMockInstance = axios.create();

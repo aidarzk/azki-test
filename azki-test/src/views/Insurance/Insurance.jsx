@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, Fragment } from "react";
 
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -89,14 +89,6 @@ const Insurance = () => {
           />
         );
     }
-  };
-
-  const handleNext = () => {
-    setActiveStep((prevState) => prevState + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevState) => prevState - 1);
   };
 
   return (

@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import farsi from "src/dictionary/farsi";
 
 const CustomAutocomplete = (props) => {
-  const { label, name, onChange, errors, className, value, options } = props;
+  const { label, name, onChange, errors, value, options } = props;
 
   return (
     <Autocomplete

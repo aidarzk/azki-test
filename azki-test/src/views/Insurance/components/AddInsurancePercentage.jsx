@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import farsi from "src/dictionary/farsi";
-import { Button, Grid, TextField, Typography } from "@mui/material";
-
-import { validationRules } from "src/enums";
-import { validation } from "src/functions";
+import { Button, Grid, Typography } from "@mui/material";
 
 import { CustomAutocomplete } from "src/components";
 
@@ -12,7 +9,6 @@ import axios from "axios";
 
 const SelectCar = (props) => {
   const {
-    setActiveStep,
     thirdPersonPercentage,
     incidentPercentage,
     onChangeAutoComplete,

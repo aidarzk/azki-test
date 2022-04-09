@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 
-import Box from "@mui/material/Box";
 import { Grid } from "@mui/material";
 
 import { Header, Background } from "./components";
