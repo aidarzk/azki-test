@@ -72,7 +72,6 @@ const Insurance = () => {
       case "addInsurancePercentage":
         return (
           <AddInsurancePercentage
-            setActiveStep={setActiveStep}
             onChangeAutoComplete={onChangeAutoComplete}
             openModal={openModal}
             thirdPersonPercentage={thirdPersonPercentage}

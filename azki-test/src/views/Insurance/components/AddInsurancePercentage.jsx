@@ -101,6 +101,7 @@ const SelectCar = (props) => {
           }}
           variant="contained"
           onClick={openModal}
+          disabled={!incidentPercentage || !thirdPersonPercentage}
         >
           {farsi.getPrice}
         </Button>

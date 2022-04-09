@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 
 const Header = (props) => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, position: "relative" }} className="backgroundBox">
       <Grid container>
         <Grid item xl={6} lg={6} md={6} sm={12} xs={12}></Grid>
         <Grid
@@ -17,23 +17,11 @@ const Header = (props) => {
           xs={12}
           sx={{
             backgroundColor: "#fef7dd",
-            height: "calc(100vh - 64px)",
+            height: [80, 80, "100vh"],
           }}
         ></Grid>
-        <img
-          alt="car"
-          style={{
-            position: "absolute",
-            bottom: 10,
-            left: 10,
-            maxWidth: 750,
-          }}
-          src="icons/car-green.svg"
-        />
       </Grid>
-      {/* <div style={{
-                backgroundColor
-            }}></div> */}
+      <img alt="car" className="mainImage" src="icons/car-green.svg" />
     </Box>
   );
 };

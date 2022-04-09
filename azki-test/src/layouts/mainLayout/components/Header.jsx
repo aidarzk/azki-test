@@ -18,7 +18,7 @@ const Header = (props) => {
       <AppBar
         color="transparent"
         position="relative"
-        sx={{ boxShadow: "none" }}
+        sx={{ boxShadow: "none", zIndex: 1 }}
       >
         <Toolbar>
           <IconButton
